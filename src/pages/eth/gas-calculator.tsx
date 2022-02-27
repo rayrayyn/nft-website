@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { TextField, TextFieldTypes } from "../../components/TextField";
+import InputField, { InputFieldTypes } from "../../components/InputField";
 import { useRouter } from "next/router";
+import Layout from "../../components/Layout";
 
 type QueryParamTypes = {
     mintCost?: string;
@@ -27,6 +28,8 @@ const GasCalculator = () => {
         if (mintCost && gasLimit && gasFee) {
             const result = getGasCalculation(gasLimit, gasFee);
             setTotalCost(Number(mintCost) + result);
+        } else {
+            setTotalCost(0);
         }
     }, [mintCost, gasLimit, gasFee, getGasCalculation]);
 
@@ -37,39 +40,33 @@ const GasCalculator = () => {
     }, [query]);
 
     return (
-        <Container>
+        <Layout title="Gas Calculator" description="E">
             <InputContainer>
-                <TextField
-                    type={TextFieldTypes.number}
+                <InputField
+                    type={InputFieldTypes.number}
                     value={mintCost}
                     onChange={setMintCost}
                     placeHolder="Mint Cost"
                 />
-                <TextField
-                    type={TextFieldTypes.number}
+                <InputField
+                    type={InputFieldTypes.number}
                     value={gasFee}
                     onChange={setGasFee}
                     placeHolder="Gas Fee (GWEI)"
                 />
-                <TextField
-                    type={TextFieldTypes.number}
+                <InputField
+                    type={InputFieldTypes.number}
                     value={gasLimit}
                     onChange={setGasLimit}
                     placeHolder="Gas Limit"
                 />
             </InputContainer>
 
-            {totalCost && <div>Total Cost: {totalCost}Ξ</div>}
-        </Container>
+            <div>Total Cost: {totalCost ? totalCost : 0}Ξ</div>
+        </Layout>
     );
 };
 
 export default GasCalculator;
-
-const Container = styled.div`
-    width: 90%;
-    margin: 50px auto;
-    text-align: center;
-`;
 
 const InputContainer = styled.div``;

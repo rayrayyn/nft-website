@@ -1,16 +1,17 @@
 import type { AppProps } from "next/app";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+
 import NavBar from "../components/NavBar";
-import { COLORS } from "../constants/styles";
+import { LIGHT_THEME } from "../constants/themes";
+import { AnimatePresence } from "framer-motion";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: ${COLORS.background.primary};
-    color: ${COLORS.text.primary};
+    font-family: Montserrat, sans-serif;
+    background-color: ${({ theme }) => theme.colors.body};
+    color: ${({ theme }) => theme.colors.text};
   }
 
   input::-webkit-outer-spin-button,
@@ -26,11 +27,17 @@ const GlobalStyle = createGlobalStyle`
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <>
+        <ThemeProvider theme={LIGHT_THEME}>
             <GlobalStyle />
             <NavBar />
-            <Component {...pageProps} />
-        </>
+            <AnimatePresence
+                exitBeforeEnter
+                initial={false}
+                onExitComplete={() => window.scrollTo(0, 0)}
+            >
+                <Component {...pageProps} />
+            </AnimatePresence>
+        </ThemeProvider>
     );
 }
 

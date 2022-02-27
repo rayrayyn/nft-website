@@ -6,7 +6,7 @@ import {
     CYBER_TURTLES_STAKED_ABI_DATA,
     CYBER_TURTLES_STAKING_CONTRACT_ADDRESS,
 } from "../../constants/cyberTurtles";
-import styled from "styled-components";
+import Layout from "../../components/Layout";
 
 const CyberTurtles = () => {
     const [imageUrl, setImageUrl] = useState();
@@ -37,7 +37,7 @@ const CyberTurtles = () => {
             provider
         );
 
-        const result = stakingContract
+        stakingContract
             .totalSupply()
             .then((value: any) => setTotalStaked(value._hex / 1));
     };
@@ -50,20 +50,15 @@ const CyberTurtles = () => {
     }, []);
 
     return (
-        <Container>
-            <img src={imageUrl} />
+        <Layout title="Cyber Turtles" description="$SHELL">
+            <img src={imageUrl} alt="Cyber Turtles Image" />
             <p>Max Supply: {maxSupply}</p>
             <p>Total Staked: {totalStaked}</p>
             <p>
                 Percent Staked: {((totalStaked / maxSupply) * 100).toFixed(2)}%
             </p>
-        </Container>
+        </Layout>
     );
 };
 
 export default CyberTurtles;
-
-const Container = styled.div`
-    width: 90%;
-    margin: auto;
-`;
