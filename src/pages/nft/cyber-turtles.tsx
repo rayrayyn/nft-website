@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+
 import {
     CYBER_TURTLES_CONTRACT_ADDRESS,
     CYBER_TURTLES_ABI_DATA,
@@ -51,7 +52,7 @@ const CyberTurtles = () => {
 
     return (
         <Layout title="Cyber Turtles" description="$SHELL">
-            <img src={imageUrl} alt="Cyber Turtles Image" />
+            {imageUrl && <img src={imageUrl} alt="Cyber Turtles Image" />}
             <p>Max Supply: {maxSupply}</p>
             <p>Total Staked: {totalStaked}</p>
             <p>

@@ -41,32 +41,54 @@ const GasCalculator = () => {
 
     return (
         <Layout title="Gas Calculator" description="E">
-            <InputContainer>
-                <InputField
-                    type={InputFieldTypes.number}
-                    value={mintCost}
-                    onChange={setMintCost}
-                    placeHolder="Mint Cost"
-                />
-                <InputField
-                    type={InputFieldTypes.number}
-                    value={gasFee}
-                    onChange={setGasFee}
-                    placeHolder="Gas Fee (GWEI)"
-                />
-                <InputField
-                    type={InputFieldTypes.number}
-                    value={gasLimit}
-                    onChange={setGasLimit}
-                    placeHolder="Gas Limit"
-                />
-            </InputContainer>
+            <Container>
+                <InputContainer>
+                    <InputField
+                        type={InputFieldTypes.number}
+                        value={mintCost}
+                        onChange={setMintCost}
+                        placeHolder="Mint Cost"
+                        useLabel
+                    />
+                    <InputField
+                        type={InputFieldTypes.number}
+                        value={gasFee}
+                        onChange={setGasFee}
+                        placeHolder="Gas Fee (GWEI)"
+                        useLabel
+                    />
+                    <InputField
+                        type={InputFieldTypes.number}
+                        value={gasLimit}
+                        onChange={setGasLimit}
+                        placeHolder="Gas Limit"
+                        useLabel
+                    />
+                </InputContainer>
 
-            <div>Total Cost: {totalCost ? totalCost : 0}Ξ</div>
+                <TotalCostContainer>
+                    Total Cost: {totalCost ? totalCost : 0}Ξ
+                </TotalCostContainer>
+            </Container>
         </Layout>
     );
 };
 
 export default GasCalculator;
 
-const InputContainer = styled.div``;
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const InputContainer = styled.div`
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+`;
+
+export const TotalCostContainer = styled.div`
+    margin: 16px;
+`;

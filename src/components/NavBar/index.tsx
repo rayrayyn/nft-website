@@ -105,7 +105,6 @@ const Container = styled.div<{ shouldShow: boolean }>`
 const NavContainer = styled.div`
     height: 100%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     margin: 0 16px;
 `;
@@ -123,7 +122,14 @@ const LeftContainer = styled.div`
 `;
 
 const StyledLink = styled.a`
+    color: ${({ theme }) => theme.colors.text};
     text-decoration: none;
+    display: flex;
+    align-items: center;
 `;
 
-const RightContainer = styled.div``;
+const RightContainer = styled.div`
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+`;

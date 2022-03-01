@@ -1,9 +1,12 @@
 import type { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { AnimatePresence } from "framer-motion";
+import { Provider } from "react-redux";
 
+import store from "../redux/store";
 import NavBar from "../components/NavBar";
 import { LIGHT_THEME } from "../constants/themes";
-import { AnimatePresence } from "framer-motion";
+import ModalContainer from "../components/ModalContainer";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -27,17 +30,20 @@ const GlobalStyle = createGlobalStyle`
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider theme={LIGHT_THEME}>
-            <GlobalStyle />
-            <NavBar />
-            <AnimatePresence
-                exitBeforeEnter
-                initial={false}
-                onExitComplete={() => window.scrollTo(0, 0)}
-            >
-                <Component {...pageProps} />
-            </AnimatePresence>
-        </ThemeProvider>
+        <Provider store={store}>
+            <ThemeProvider theme={LIGHT_THEME}>
+                <GlobalStyle />
+                <ModalContainer />
+                <NavBar />
+                <AnimatePresence
+                    exitBeforeEnter
+                    initial={false}
+                    onExitComplete={() => window.scrollTo(0, 0)}
+                >
+                    <Component {...pageProps} />
+                </AnimatePresence>
+            </ThemeProvider>
+        </Provider>
     );
 }
 
