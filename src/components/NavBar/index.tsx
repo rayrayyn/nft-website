@@ -1,80 +1,75 @@
 import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
-import DropDownMenu from "../DropDownMenu";
+import { toast } from "react-hot-toast";
+
+import DropDown from "./DropDown";
 import { DROP_DOWN_MENU_ITEMS } from "../../constants/navBarItems";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserEthereumAddress } from "../../redux/user/selectors";
+import { setUserEthereumAddress } from "../../redux/user/action";
+import { WindowEthereumRequestError } from "../../types/window.ethereum";
+import { formatAddress } from "../../utils/ethereum/helpers";
+import { useShouldNavBarBeVisible } from "./hooks";
 
 const NavBar = () => {
-    const [wallet, setWallet] = useState<string>("");
-    const [shouldShow, setShouldShow] = useState<boolean>(true);
-    const [previousScrollPosition, setPreviousScrollPosition] =
-        useState<number>(0);
-
-    const formatAddress = useCallback((address: string): string => {
-        const left = address.substring(0, 4);
-        const right = address.substring(address.length - 4);
-        return left + "..." + right;
-    }, []);
+    const dispatch = useDispatch();
+    const shouldNavBarBeVisible = useShouldNavBarBeVisible();
+    const ethereumWallet = useSelector(selectUserEthereumAddress);
 
     const checkIfWalletIsConnected = useCallback(() => {
-        if (!window.ethereum) {
-            return console.log("No ethereum wallet provider found.");
+        if (window.ethereum) {
+            window.ethereum
+                .request({
+                    method: "eth_accounts",
+                })
+                .then((accounts: string[]) => {
+                    if (accounts[0]) {
+                        dispatch(setUserEthereumAddress(accounts[0]));
+                    }
+                })
+                .catch((err: WindowEthereumRequestError) =>
+                    toast.error(err.message)
+                );
         }
-
-        window.ethereum
-            .request({
-                method: "eth_accounts",
-            })
-            .then((accounts: string[]) => {
-                if (accounts[0]) {
-                    setWallet(formatAddress(accounts[0]));
-                }
-            })
-            .catch(console.log);
-    }, [formatAddress]);
+    }, [dispatch]);
 
     const handleConnect = useCallback(() => {
-        window.ethereum
-            .request({
-                method: "eth_requestAccounts",
-            })
-            .then((accounts: string[]) => {
-                setWallet(formatAddress(accounts[0]));
-            })
-            .catch(console.log);
-    }, [formatAddress]);
+        if (window.ethereum) {
+            window.ethereum
+                .request({
+                    method: "eth_requestAccounts",
+                })
+                .then((accounts: string[]) => {
+                    if (accounts[0]) {
+                        dispatch(setUserEthereumAddress(accounts[0]));
+                    }
+                })
+                .catch((err: WindowEthereumRequestError) =>
+                    toast.error(err.message)
+                );
+        } else {
+            toast.error("Please Install An Ethereum Wallet");
+        }
+    }, [dispatch]);
 
     const handleDisconnect = useCallback(() => {
-        setWallet("");
-    }, []);
-
-    const shouldNavBarBeVisible = useCallback(() => {
-        const scrollTop = window.scrollY;
-        setShouldShow(previousScrollPosition > scrollTop);
-        setPreviousScrollPosition(scrollTop);
-    }, [previousScrollPosition]);
+        dispatch(setUserEthereumAddress(""));
+    }, [dispatch]);
 
     useEffect(() => {
         checkIfWalletIsConnected();
     }, [checkIfWalletIsConnected]);
 
-    useEffect(() => {
-        window.addEventListener("scroll", shouldNavBarBeVisible);
-
-        return () => {
-            window.removeEventListener("scroll", shouldNavBarBeVisible);
-        };
-    }, [shouldNavBarBeVisible]);
-
     return (
-        <Container shouldShow={shouldShow}>
+        <Container shouldNavBarBeVisible={shouldNavBarBeVisible}>
             <NavContainer>
                 <LeftContainer>
                     <Link href="/" passHref>
                         <StyledLink>Home</StyledLink>
                     </Link>
                     {DROP_DOWN_MENU_ITEMS.map((item, index) => (
-                        <DropDownMenu
+                        <DropDown
                             key={index}
                             title={item.title}
                             list={item.list}
@@ -82,9 +77,11 @@ const NavBar = () => {
                     ))}
                 </LeftContainer>
                 <RightContainer
-                    onClick={wallet ? handleDisconnect : handleConnect}
+                    onClick={ethereumWallet ? handleDisconnect : handleConnect}
                 >
-                    {wallet ? wallet : "Connect Wallet"}
+                    {ethereumWallet
+                        ? formatAddress(ethereumWallet)
+                        : "Connect Wallet"}
                 </RightContainer>
             </NavContainer>
         </Container>
@@ -93,12 +90,12 @@ const NavBar = () => {
 
 export default NavBar;
 
-const Container = styled.div<{ shouldShow: boolean }>`
+const Container = styled.div<{ shouldNavBarBeVisible: boolean }>`
     height: 80px;
     background-color: ${({ theme }) => theme.colors.navBar.background};
-    box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
     position: sticky;
-    top: ${({ shouldShow }) => (shouldShow ? 0 : "-90px")};
+    top: ${({ shouldNavBarBeVisible }) =>
+        shouldNavBarBeVisible ? 0 : "-90px"};
     transition: 0.3s;
 `;
 

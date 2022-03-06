@@ -1,12 +1,13 @@
 import type { AppProps } from "next/app";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { AnimatePresence } from "framer-motion";
 import { Provider } from "react-redux";
+import { Toaster } from "react-hot-toast";
 
 import store from "../redux/store";
 import NavBar from "../components/NavBar";
-import { LIGHT_THEME } from "../constants/themes";
-import ModalContainer from "../components/ModalContainer";
+import Modal from "../components/Modal";
+import ThemeManager from "../components/ThemeManager";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -31,9 +32,10 @@ const GlobalStyle = createGlobalStyle`
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
-            <ThemeProvider theme={LIGHT_THEME}>
+            <ThemeManager>
                 <GlobalStyle />
-                <ModalContainer />
+                <Toaster position="top-center" reverseOrder={false} />
+                <Modal />
                 <NavBar />
                 <AnimatePresence
                     exitBeforeEnter
@@ -42,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 >
                     <Component {...pageProps} />
                 </AnimatePresence>
-            </ThemeProvider>
+            </ThemeManager>
         </Provider>
     );
 }

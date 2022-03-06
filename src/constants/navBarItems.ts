@@ -1,10 +1,12 @@
+import { ETH_PATHS, NFT_PATHS } from "./routes";
+
 export const DROP_DOWN_MENU_ITEMS = [
     {
         title: "NFT",
         list: [
             {
                 name: "Cyber Turtles",
-                href: "/nft/cyber-turtles",
+                href: NFT_PATHS.cyberTurtles,
             },
         ],
     },
@@ -13,7 +15,7 @@ export const DROP_DOWN_MENU_ITEMS = [
         list: [
             {
                 name: "Gas Calculator",
-                href: "/eth/gas-calculator",
+                href: ETH_PATHS.gasCalculator,
             },
         ],
     },

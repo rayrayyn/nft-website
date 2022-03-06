@@ -4,6 +4,8 @@ import styled from "styled-components";
 import InputField, { InputFieldTypes } from "../../components/InputField";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
+import { toast } from "react-hot-toast";
+import { ETH_PATHS } from "../../constants/routes";
 
 type QueryParamTypes = {
     mintCost?: string;
@@ -24,6 +26,16 @@ const GasCalculator = () => {
         []
     );
 
+    const copyToClipboard = () => {
+        navigator.clipboard
+            .writeText(
+                `${window.location.origin.toString()}${
+                    ETH_PATHS.gasCalculator
+                }?mintCost=${mintCost}&gasFee=${gasFee}&gasLimit=${gasLimit}`
+            )
+            .then(() => toast.success("Copied To Clipboard!"));
+    };
+
     useEffect(() => {
         if (mintCost && gasLimit && gasFee) {
             const result = getGasCalculation(gasLimit, gasFee);
@@ -40,7 +52,7 @@ const GasCalculator = () => {
     }, [query]);
 
     return (
-        <Layout title="Gas Calculator" description="E">
+        <Layout title="Gas Calculator" description="Estimate Transaction Costs">
             <Container>
                 <InputContainer>
                     <InputField
@@ -54,7 +66,7 @@ const GasCalculator = () => {
                         type={InputFieldTypes.number}
                         value={gasFee}
                         onChange={setGasFee}
-                        placeHolder="Gas Fee (GWEI)"
+                        placeHolder="Max base fee (GWEI)"
                         useLabel
                     />
                     <InputField
@@ -69,6 +81,12 @@ const GasCalculator = () => {
                 <TotalCostContainer>
                     Total Cost: {totalCost ? totalCost : 0}Ξ
                 </TotalCostContainer>
+
+                {!!totalCost && (
+                    <CopyToClipboardContainer onClick={copyToClipboard}>
+                        Copy!
+                    </CopyToClipboardContainer>
+                )}
             </Container>
         </Layout>
     );
@@ -89,6 +107,10 @@ const InputContainer = styled.div`
     flex-flow: row wrap;
 `;
 
-export const TotalCostContainer = styled.div`
+const TotalCostContainer = styled.div`
     margin: 16px;
+`;
+
+const CopyToClipboardContainer = styled.div`
+    cursor: pointer;
 `;

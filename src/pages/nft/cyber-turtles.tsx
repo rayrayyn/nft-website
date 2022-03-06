@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import Image from "next/image";
 
 import {
-    CYBER_TURTLES_CONTRACT_ADDRESS,
     CYBER_TURTLES_ABI_DATA,
+    CYBER_TURTLES_CONTRACT_ADDRESS,
     CYBER_TURTLES_STAKED_ABI_DATA,
     CYBER_TURTLES_STAKING_CONTRACT_ADDRESS,
 } from "../../constants/cyberTurtles";
 import Layout from "../../components/Layout";
+import { useEthereumNetwork } from "../../utils/ethereum/hooks";
+import { EthereumNetworks } from "../../utils/ethereum/types";
+import EthereumErrorPage from "../../components/Error/EthereumErrorPage";
 
 const CyberTurtles = () => {
+    const isConnected = useEthereumNetwork(EthereumNetworks.mainnet);
     const [imageUrl, setImageUrl] = useState();
     const [maxSupply, setMaxSupply] = useState(0);
     const [totalStaked, setTotalStaked] = useState(0);
@@ -44,15 +49,30 @@ const CyberTurtles = () => {
     };
 
     useEffect(() => {
-        if (window.ethereum) {
+        if (isConnected) {
             getTotalStaked();
             getOpenSeaInfo();
         }
-    }, []);
+    }, [isConnected]);
 
     return (
-        <Layout title="Cyber Turtles" description="$SHELL">
-            {imageUrl && <img src={imageUrl} alt="Cyber Turtles Image" />}
+        <Layout
+            title="Cyber Turtles"
+            description="$SHELL"
+            displayErrorPage={
+                !isConnected && (
+                    <EthereumErrorPage network={EthereumNetworks.mainnet} />
+                )
+            }
+        >
+            {imageUrl && (
+                <Image
+                    src={imageUrl}
+                    alt="Cyber Turtles Image"
+                    width={128}
+                    height={128}
+                />
+            )}
             <p>Max Supply: {maxSupply}</p>
             <p>Total Staked: {totalStaked}</p>
             <p>

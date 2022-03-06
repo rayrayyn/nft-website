@@ -7,6 +7,7 @@ type Props = {
     children: ReactNode;
     title: string;
     description: string;
+    displayErrorPage?: ReactNode;
 };
 
 const variants = {
@@ -15,7 +16,7 @@ const variants = {
     exit: { opacity: 0, x: 0, y: -200 },
 };
 
-const Layout = ({ children, title, description }: Props) => {
+const Layout = ({ children, title, description, displayErrorPage }: Props) => {
     return (
         <div>
             <Head>
@@ -33,7 +34,7 @@ const Layout = ({ children, title, description }: Props) => {
                 variants={variants}
                 transition={{ type: "linear" }}
             >
-                {children}
+                {displayErrorPage || children}
             </Main>
         </div>
     );

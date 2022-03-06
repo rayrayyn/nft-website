@@ -49,7 +49,7 @@ const DropDownItemContainer = styled.div<{ shouldShow: boolean }>`
     position: absolute;
     top: 80px;
     flex-direction: column;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.navBar.background};
     border-radius: 0 0 8px 8px;
     overflow: hidden;
 `;
