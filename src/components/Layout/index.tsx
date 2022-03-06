@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import styled from "styled-components";
-import Footer from "../Footer";
+import Footer from "./Footer";
 
 type Props = {
     children: ReactNode;
@@ -13,9 +13,9 @@ type Props = {
 };
 
 const variants = {
-    hidden: { opacity: 0, x: -200, y: 0 },
+    hidden: { opacity: 0, x: 0, y: -50 },
     enter: { opacity: 1, x: 0, y: 0 },
-    exit: { opacity: 0, x: 0, y: -200 },
+    exit: { opacity: 0, x: 0, y: 0 },
 };
 
 const Layout = ({
@@ -28,7 +28,7 @@ const Layout = ({
     return (
         <>
             <Head>
-                <title>{title}</title>
+                <title>{title} - Flameray</title>
                 <meta name="description" content={description} />
                 <meta
                     name="viewport"

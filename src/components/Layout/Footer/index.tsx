@@ -5,7 +5,7 @@ import { FaTwitter, FaDiscord } from "react-icons/fa";
 import {
     FOOTER_HELPFUL_LINKS_ITEMS,
     FOOTER_SOCIAL_ITEMS,
-} from "../../constants/FooterItems";
+} from "../../../constants/FooterItems";
 
 const Footer = () => {
     return (
@@ -51,7 +51,7 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.footer`
-    background-color: ${({ theme }) => theme.colors.footer.background};
+    background-color: ${({ theme }) => theme.colors.background};
     margin-top: auto;
 `;
 

@@ -7,15 +7,10 @@ export const LIGHT_THEME: DefaultTheme = {
     colors: {
         body: "#f5f5f7",
         text: "#000000",
+        background: "#fff",
         button: {
             text: "",
             background: "",
-        },
-        navBar: {
-            background: "#fff",
-        },
-        footer: {
-            background: "#fff",
         },
     },
 };
@@ -25,15 +20,10 @@ export const DARK_THEME: DefaultTheme = {
     colors: {
         body: "#121212",
         text: "#fff",
+        background: "#000000",
         button: {
             text: "",
             background: "",
-        },
-        navBar: {
-            background: "#000000",
-        },
-        footer: {
-            background: "#000000",
         },
     },
 };

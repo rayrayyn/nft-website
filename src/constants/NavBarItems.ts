@@ -1,6 +1,10 @@
 import { ETH_PATHS, NFT_PATHS } from "./routes";
 
-export const DROP_DOWN_MENU_ITEMS = [
+export const NAV_BAR_ITEMS = [
+    {
+        name: "Home",
+        href: "/",
+    },
     {
         title: "NFT",
         list: [

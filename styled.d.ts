@@ -6,12 +6,7 @@ declare module "styled-components" {
         colors: {
             body: string;
             text: string;
-            navBar: {
-                background: string;
-            };
-            footer: {
-                background: string;
-            };
+            background: string;
             button: {
                 text: string;
                 background: string;

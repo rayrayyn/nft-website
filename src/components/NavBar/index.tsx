@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { toast } from "react-hot-toast";
 
 import DropDown from "./DropDown";
-import { DROP_DOWN_MENU_ITEMS } from "../../constants/NavBarItems";
+import { NAV_BAR_ITEMS } from "../../constants/NavBarItems";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserEthereumAddress } from "../../redux/user/selectors";
 import { setUserEthereumAddress } from "../../redux/user/action";
@@ -65,16 +65,19 @@ const NavBar = memo(() => {
         <Container shouldNavBarBeVisible={shouldNavBarBeVisible}>
             <NavContainer>
                 <LeftContainer>
-                    <Link href="/" passHref>
-                        <StyledLink>Home</StyledLink>
-                    </Link>
-                    {DROP_DOWN_MENU_ITEMS.map((item, index) => (
-                        <DropDown
-                            key={index}
-                            title={item.title}
-                            list={item.list}
-                        />
-                    ))}
+                    {NAV_BAR_ITEMS.map((item, index) =>
+                        item.list ? (
+                            <DropDown
+                                key={index}
+                                title={item.title}
+                                list={item.list}
+                            />
+                        ) : (
+                            <Link key={index} href={item.href} passHref>
+                                <StyledLink>{item.name}</StyledLink>
+                            </Link>
+                        )
+                    )}
                 </LeftContainer>
                 <RightContainer
                     onClick={ethereumWallet ? handleDisconnect : handleConnect}
@@ -94,7 +97,7 @@ export default NavBar;
 
 const Container = styled.nav<{ shouldNavBarBeVisible: boolean }>`
     height: 80px;
-    background-color: ${({ theme }) => theme.colors.navBar.background};
+    background-color: ${({ theme }) => theme.colors.background};
     position: sticky;
     top: ${({ shouldNavBarBeVisible }) =>
         shouldNavBarBeVisible ? 0 : "-90px"};
