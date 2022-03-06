@@ -2,12 +2,14 @@ import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import styled from "styled-components";
+import Footer from "../Footer";
 
 type Props = {
     children: ReactNode;
     title: string;
     description: string;
-    displayErrorPage?: ReactNode;
+    showFooter?: boolean;
+    showErrorPage?: ReactNode;
 };
 
 const variants = {
@@ -16,9 +18,15 @@ const variants = {
     exit: { opacity: 0, x: 0, y: -200 },
 };
 
-const Layout = ({ children, title, description, displayErrorPage }: Props) => {
+const Layout = ({
+    children,
+    title,
+    description,
+    showErrorPage,
+    showFooter,
+}: Props) => {
     return (
-        <div>
+        <>
             <Head>
                 <title>{title}</title>
                 <meta name="description" content={description} />
@@ -34,9 +42,10 @@ const Layout = ({ children, title, description, displayErrorPage }: Props) => {
                 variants={variants}
                 transition={{ type: "linear" }}
             >
-                {displayErrorPage || children}
+                {showErrorPage || children}
             </Main>
-        </div>
+            {showFooter && <Footer />}
+        </>
     );
 };
 

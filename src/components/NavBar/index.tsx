@@ -1,10 +1,10 @@
 import Link from "next/link";
-import React, { useCallback, useEffect } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { toast } from "react-hot-toast";
 
 import DropDown from "./DropDown";
-import { DROP_DOWN_MENU_ITEMS } from "../../constants/navBarItems";
+import { DROP_DOWN_MENU_ITEMS } from "../../constants/NavBarItems";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserEthereumAddress } from "../../redux/user/selectors";
 import { setUserEthereumAddress } from "../../redux/user/action";
@@ -12,7 +12,7 @@ import { WindowEthereumRequestError } from "../../types/window.ethereum";
 import { formatAddress } from "../../utils/ethereum/helpers";
 import { useShouldNavBarBeVisible } from "./hooks";
 
-const NavBar = () => {
+const NavBar = memo(() => {
     const dispatch = useDispatch();
     const shouldNavBarBeVisible = useShouldNavBarBeVisible();
     const ethereumWallet = useSelector(selectUserEthereumAddress);
@@ -86,11 +86,13 @@ const NavBar = () => {
             </NavContainer>
         </Container>
     );
-};
+});
+
+NavBar.displayName = "NavBar";
 
 export default NavBar;
 
-const Container = styled.div<{ shouldNavBarBeVisible: boolean }>`
+const Container = styled.nav<{ shouldNavBarBeVisible: boolean }>`
     height: 80px;
     background-color: ${({ theme }) => theme.colors.navBar.background};
     position: sticky;

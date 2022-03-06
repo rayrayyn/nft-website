@@ -1,3 +1,4 @@
+import React from "react";
 import type { AppProps } from "next/app";
 import { createGlobalStyle } from "styled-components";
 import { AnimatePresence } from "framer-motion";
@@ -16,6 +17,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: Montserrat, sans-serif;
     background-color: ${({ theme }) => theme.colors.body};
     color: ${({ theme }) => theme.colors.text};
+
+    > div {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   input::-webkit-outer-spin-button,
@@ -36,6 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <GlobalStyle />
                 <Toaster position="top-center" reverseOrder={false} />
                 <Modal />
+
                 <NavBar />
                 <AnimatePresence
                     exitBeforeEnter

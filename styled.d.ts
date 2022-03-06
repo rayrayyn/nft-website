@@ -9,6 +9,9 @@ declare module "styled-components" {
             navBar: {
                 background: string;
             };
+            footer: {
+                background: string;
+            };
             button: {
                 text: string;
                 background: string;

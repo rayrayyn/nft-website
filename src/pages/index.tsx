@@ -3,35 +3,7 @@ import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
     return (
-        <Layout title="Home" description="Site by Flameray!">
-            <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
-            <h1>HOME</h1> <h1>HOME</h1>
+        <Layout title="Home" description="Site by Flameray!" showFooter>
             <h1>HOME</h1>
         </Layout>
     );

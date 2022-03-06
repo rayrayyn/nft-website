@@ -14,6 +14,9 @@ export const LIGHT_THEME: DefaultTheme = {
         navBar: {
             background: "#fff",
         },
+        footer: {
+            background: "#fff",
+        },
     },
 };
 
@@ -27,6 +30,9 @@ export const DARK_THEME: DefaultTheme = {
             background: "",
         },
         navBar: {
+            background: "#000000",
+        },
+        footer: {
             background: "#000000",
         },
     },

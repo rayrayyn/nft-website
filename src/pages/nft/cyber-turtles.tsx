@@ -59,7 +59,7 @@ const CyberTurtles = () => {
         <Layout
             title="Cyber Turtles"
             description="$SHELL"
-            displayErrorPage={
+            showErrorPage={
                 !isConnected && (
                     <EthereumErrorPage network={EthereumNetworks.mainnet} />
                 )
